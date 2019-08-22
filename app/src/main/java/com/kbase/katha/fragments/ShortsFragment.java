@@ -19,7 +19,6 @@ import com.kbase.katha.APIService;
 import com.kbase.katha.R;
 import com.kbase.katha.RetrofitInstance;
 import com.kbase.katha.adapter.StoryAdapter;
-import com.kbase.katha.model.Customer;
 import com.kbase.katha.model.Story;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import retrofit2.Response;
 public class ShortsFragment extends Fragment implements SearchView.OnQueryTextListener {
     private StoryAdapter storyAdapter;
     private SearchView searchView;
-    ArrayList<Customer> name;
     RecyclerView recyclerView;
 
 
@@ -46,7 +44,6 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
         textView.setText("This is short stories fragment");
         recyclerView = root.findViewById(R.id.recyclingView);
         searchView = root.findViewById(R.id.searchView);
-        name = new ArrayList<>();
         searchView.setOnQueryTextListener(this);
         getAllShortStories();
     }
@@ -62,8 +59,10 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
                 for (Story story : stories) {
                     System.out.println(story.getStoryContent());
                 }
-                storyAdapter = new StoryAdapter(name);
+
+                storyAdapter = new StoryAdapter(stories);
                 recyclerView.setAdapter(storyAdapter);
+
 
             }
 

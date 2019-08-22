@@ -39,19 +39,19 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
         recyclerView = root.findViewById(R.id.recyclingView);
         searchView = root.findViewById(R.id.searchView);
         name = new ArrayList<>();
-        System.out.println("call");
-
-
-        for (int i = 0; i < 10; i++) {
-            Customer customer = new Customer();
-            customer.setName("novels name" + i);
-            customer.setDes("novels des" + i);
-            name.add(customer);
-        }
-
-        storyAdapter = new StoryAdapter(name);
-        recyclerView.setAdapter(storyAdapter);
-        searchView.setOnQueryTextListener(this);
+//        System.out.println("call");
+//
+//
+//        for (int i = 0; i < 10; i++) {
+//            Customer customer = new Customer();
+//            customer.setName("novels name" + i);
+//            customer.setDes("novels des" + i);
+//            name.add(customer);
+//        }
+//
+//        storyAdapter = new StoryAdapter(name);
+//        recyclerView.setAdapter(storyAdapter);
+//        searchView.setOnQueryTextListener(this);
     }
 
     @Override

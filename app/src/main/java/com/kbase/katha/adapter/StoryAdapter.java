@@ -10,18 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kbase.katha.R;
 import com.kbase.katha.model.Customer;
+import com.kbase.katha.model.Story;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    ArrayList<Customer> nameArrayList;
-    ArrayList<Customer> arryList;
+    ArrayList<Story> nameArrayList;
+    ArrayList<Story> arryList;
 
-    public StoryAdapter(ArrayList<Customer> name) {
-        this.nameArrayList = name;
+    public StoryAdapter(ArrayList<Story> story) {
+        this.nameArrayList = story;
         arryList = new ArrayList<>();
-        arryList.addAll(name);
+        arryList.addAll(story);
     }
 
     @NonNull
@@ -35,15 +36,13 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Customer name = nameArrayList.get(position);
-        System.out.println(position);
-        ((TextViewHolder) holder).name.setText(name.getName());
-        ((TextViewHolder) holder).des.setText(name.getDes());
+        Story story = nameArrayList.get(position);
+        ((TextViewHolder) holder).name.setText(story.getStoryId());
+        ((TextViewHolder) holder).des.setText(story.getStoryTitleSinglish());
     }
 
     @Override
     public int getItemCount() {
-        System.out.println(nameArrayList.size());
         return nameArrayList.size();
     }
 
@@ -62,18 +61,15 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public void filter(String charText) {
-        System.out.println(charText);
         charText = charText.toLowerCase(Locale.getDefault());
         nameArrayList.clear();
         if (charText.length() == 0) {
             nameArrayList.addAll(arryList);
         } else {
-            for (Customer response : arryList) {
-                if (response.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    System.out.println("call name");
+            for (Story response : arryList) {
+                if (response.getStoryTitleSinglish().toLowerCase(Locale.getDefault()).contains(charText)) {
                     nameArrayList.add(response);
-                } else if (response.getDes().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    System.out.println("call des");
+                } else if (response.getStoryTitleSinhala().toLowerCase(Locale.getDefault()).contains(charText)) {
                     nameArrayList.add(response);
                 }
             }
