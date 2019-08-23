@@ -1,5 +1,7 @@
 package com.kbase.katha.adapter;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kbase.katha.R;
-import com.kbase.katha.model.Customer;
 import com.kbase.katha.model.Story;
+import com.kbase.katha.utill.StoryAdapterInterface;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -18,11 +20,14 @@ import java.util.Locale;
 public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<Story> nameArrayList;
     ArrayList<Story> arryList;
+    StoryAdapterInterface storyAdapterInterface;
 
-    public StoryAdapter(ArrayList<Story> story) {
+
+    public StoryAdapter(ArrayList<Story> story, Context context) {
         this.nameArrayList = story;
         arryList = new ArrayList<>();
         arryList.addAll(story);
+        this.storyAdapterInterface = (StoryAdapterInterface) context;
     }
 
     @NonNull
@@ -37,9 +42,13 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Story story = nameArrayList.get(position);
-        ((TextViewHolder) holder).name.setText(story.getStoryId());
-        ((TextViewHolder) holder).des.setText(story.getStoryTitleSinglish());
+        ((TextViewHolder) holder).title.setText(story.getStoryTitleSinhala());
+        ((TextViewHolder) holder).content.setText(story.getStoryContent());
+        ((TextViewHolder) holder).storyUploadedDate.setText("");
+        ((TextViewHolder) holder).bind(nameArrayList.get(position), storyAdapterInterface);
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -49,14 +58,23 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static class TextViewHolder extends RecyclerView.ViewHolder {
 
         View view;
-        TextView name;
-        TextView des;
+        TextView title, content, storyUploadedDate;
 
         TextViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
-            name = view.findViewById(R.id.nameText);
-            des = view.findViewById(R.id.desText);
+            storyUploadedDate = view.findViewById(R.id.storyUploadedDate);
+            title = view.findViewById(R.id.storyTitle);
+            content = view.findViewById(R.id.storyContent);
+        }
+
+        public void bind(final Story story, final StoryAdapterInterface storyAdapterInterface) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    storyAdapterInterface.navigate(story);
+                }
+            });
         }
     }
 

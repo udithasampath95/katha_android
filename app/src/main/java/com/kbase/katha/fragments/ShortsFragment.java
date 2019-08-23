@@ -1,10 +1,10 @@
 package com.kbase.katha.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.kbase.katha.APIService;
 import com.kbase.katha.R;
@@ -31,6 +30,7 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
     private StoryAdapter storyAdapter;
     private SearchView searchView;
     RecyclerView recyclerView;
+    private ProgressDialog progressDialog;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,11 +40,10 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
-        final TextView textView = root.findViewById(R.id.text_home);
-        textView.setText("This is short stories fragment");
         recyclerView = root.findViewById(R.id.recyclingView);
         searchView = root.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(this);
+        startProgress();
         getAllShortStories();
     }
 
@@ -54,24 +53,32 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
         call.enqueue(new Callback<ArrayList<Story>>() {
             @Override
             public void onResponse(Call<ArrayList<Story>> call, Response<ArrayList<Story>> response) {
+                dismissProgress();
                 ArrayList<Story> stories = new ArrayList<>();
                 stories = response.body();
-                for (Story story : stories) {
-                    System.out.println(story.getStoryContent());
-                }
-
-                storyAdapter = new StoryAdapter(stories);
+                storyAdapter = new StoryAdapter(stories, getContext());
                 recyclerView.setAdapter(storyAdapter);
-
-
             }
 
             @Override
             public void onFailure(Call<ArrayList<Story>> call, Throwable t) {
+                dismissProgress();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void startProgress() {
+        progressDialog = new ProgressDialog(getContext(), R.style.CustomDialogTheme);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMax(100);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+    }
+
+    private void dismissProgress() {
+        progressDialog.dismiss();
     }
 
     @Override

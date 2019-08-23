@@ -1,6 +1,8 @@
 package com.kbase.katha.model;
 
-public class Story {
+import java.io.Serializable;
+
+public class Story implements Serializable {
     private String storyId;
     private String storyTitleSinhala;
     private String storyTitleSinglish;
