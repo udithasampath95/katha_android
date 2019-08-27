@@ -17,12 +17,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.kbase.katha.APIService;
 import com.kbase.katha.R;
 import com.kbase.katha.RetrofitInstance;
+import com.kbase.katha.VollySingleton;
 import com.kbase.katha.adapter.StoryAdapter;
 import com.kbase.katha.model.Customer;
 import com.kbase.katha.model.Story;
+import com.kbase.katha.utill.AppConsts;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +65,7 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         startProgress();
         getAllShortStories();
+//        getDataUsingVollyRequest();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -67,10 +78,37 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
         });
     }
 
+//    private void getDataUsingVollyRequest() {
+//        i = 0;
+//        String url = AppConsts.BASEURL + "offset=" + i + "&" + "story_type=" + "short";
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                try {
+//                    JSONObject jsonObject = response.getJSONObject(0);
+//                    System.out.println(jsonObject.getString("storyId"));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                60000,
+//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//        VollySingleton.getInstance(getContext()).addToRequestQueue(jsonArrayRequest);
+//    }
+
     private void getAllShortStories() {
         i = 0;
         APIService getNoticeDataService = RetrofitInstance.getRetrofitInstance().create(APIService.class);
-        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(i,"novels");
+        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(i, "novels");
         call.enqueue(new Callback<ArrayList<Story>>() {
             @Override
             public void onResponse(Call<ArrayList<Story>> call, Response<ArrayList<Story>> response) {
@@ -125,7 +163,7 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
         list = new ArrayList<>();
         APIService getNoticeDataService = RetrofitInstance.getRetrofitInstance().create(APIService.class);
         int x = 5 * i;
-        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(x,"novels");
+        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(x, "novels");
         call.enqueue(new Callback<ArrayList<Story>>() {
             @Override
             public void onResponse(Call<ArrayList<Story>> call, Response<ArrayList<Story>> response) {
