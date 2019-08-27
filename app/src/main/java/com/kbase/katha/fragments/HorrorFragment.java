@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -29,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShortsFragment extends Fragment implements SearchView.OnQueryTextListener, StoryAdapter.OnLoadMoreListener {
+public class HorrorFragment extends Fragment implements SearchView.OnQueryTextListener, StoryAdapter.OnLoadMoreListener {
     private StoryAdapter storyAdapter;
     private SearchView searchView;
     RecyclerView recyclerView;
@@ -39,8 +38,9 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
     ArrayList<Story> stories;
     private int i;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_shorts, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_novels, container, false);
         onLoadMoreListener = this;
         recyclerView = root.findViewById(R.id.recyclingView);
         searchView = root.findViewById(R.id.searchView);
@@ -67,7 +67,7 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
     private void getAllShortStories() {
         i = 0;
         APIService getNoticeDataService = RetrofitInstance.getRetrofitInstance().create(APIService.class);
-        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(i,"short");
+        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(i, "horror");
         call.enqueue(new Callback<ArrayList<Story>>() {
             @Override
             public void onResponse(Call<ArrayList<Story>> call, Response<ArrayList<Story>> response) {
@@ -122,7 +122,7 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
         list = new ArrayList<>();
         APIService getNoticeDataService = RetrofitInstance.getRetrofitInstance().create(APIService.class);
         int x = 5 * i;
-        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(x,"short");
+        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(x, "horror");
         call.enqueue(new Callback<ArrayList<Story>>() {
             @Override
             public void onResponse(Call<ArrayList<Story>> call, Response<ArrayList<Story>> response) {

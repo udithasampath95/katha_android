@@ -17,16 +17,16 @@
         tools:layout="@layout/fragment_shorts" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.kbase.katha.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_horror"
+        android:name="com.kbase.katha.fragments.HorrorFragment"
+        android:label="@string/menu_horror"
+        tools:layout="@layout/fragment_horror" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.kbase.katha.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_save"
+        android:name="com.kbase.katha.fragments.SaveFragment"
+        android:label="@string/menu_save"
+        tools:layout="@layout/fragment_save" />
 
     <fragment
         android:id="@+id/nav_share"

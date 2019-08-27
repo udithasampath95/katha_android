@@ -3,11 +3,6 @@ package com.kbase.katha;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
-import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -55,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements StoryAdapterInter
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_novels, R.id.nav_shorts, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_novels, R.id.nav_shorts, R.id.nav_horror,
+                R.id.nav_save, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -79,9 +73,10 @@ public class MainActivity extends AppCompatActivity implements StoryAdapterInter
     }
 
     @Override
-    public void navigate(Story story) {
+    public void navigate(Story story, String save) {
         Intent intent = new Intent(MainActivity.this, StoryReadActivity.class);
         intent.putExtra("story", (Serializable) story);
+        intent.putExtra("save", save);
         startActivity(intent);
     }
 }

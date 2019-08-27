@@ -9,6 +9,7 @@ public class Story implements Serializable {
     private String storyContent;
     private String storyUploadedDate;
     private String storyUploadedBy;
+    private String imagePath;
 
     public Story() {
     }
@@ -59,5 +60,13 @@ public class Story implements Serializable {
 
     public void setStoryUploadedBy(String storyUploadedBy) {
         this.storyUploadedBy = storyUploadedBy;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
