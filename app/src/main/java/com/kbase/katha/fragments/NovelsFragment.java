@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,21 +15,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.kbase.katha.APIService;
 import com.kbase.katha.R;
 import com.kbase.katha.RetrofitInstance;
-import com.kbase.katha.VollySingleton;
-import com.kbase.katha.adapter.StoryAdapter;
-import com.kbase.katha.model.Customer;
-import com.kbase.katha.model.Story;
-import com.kbase.katha.utill.AppConsts;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.kbase.katha.adapter.StoryAdapter;
+
+import com.kbase.katha.model.Story;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -50,6 +42,8 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
     List<Story> list;
     ArrayList<Story> stories;
     private int i;
+    JSONObject jsonObject = null;
+    Story story;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,22 +74,40 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
 
 //    private void getDataUsingVollyRequest() {
 //        i = 0;
-//        String url = AppConsts.BASEURL + "offset=" + i + "&" + "story_type=" + "short";
+//        String url = AppConsts.BASEURLVOLLY + "offset=" + i + "&" + "story_type=" + "short";
 //        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONArray>() {
 //            @Override
 //            public void onResponse(JSONArray response) {
-//                try {
-//                    JSONObject jsonObject = response.getJSONObject(0);
-//                    System.out.println(jsonObject.getString("storyId"));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
+//                dismissProgress();
+//                stories = new ArrayList<>();
+//                for (int i = 0; i < response.length(); i++) {
+//                    try {
+//                        Gson gson = new Gson();
+//                        jsonObject = response.getJSONObject(i);
+//                        story=gson.fromJson(jsonObject.toString(),Story.class);
+////                        story.setStoryId(jsonObject.getString("storyId"));
+////                        story.setStoryTitleSinhala(jsonObject.getString("storyTitleSinhala"));
+////                        story.setStoryTitleSinglish(jsonObject.getString("storyTitleSinglish"));
+////                        story.setStoryContent(jsonObject.getString("storyContent"));
+////                        story.setStoryUploadedDate(jsonObject.getString("storyUploadedDate"));
+////                        story.setStoryUploadedBy(jsonObject.getString("storyUploadedBy"));
+////                        story.setImagePath(jsonObject.getString("imagePath"));
+//                        stories.add(story);
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
 //                }
+//                storyAdapter = new StoryAdapter(stories, getContext(), onLoadMoreListener);
+//                recyclerView.setAdapter(storyAdapter);
+//
 //
 //            }
 //        }, new com.android.volley.Response.ErrorListener() {
 //            @Override
 //            public void onErrorResponse(VolleyError error) {
-//
+//                dismissProgress();
+//                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
 //            }
 //        });
 //        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
