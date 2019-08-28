@@ -1,12 +1,7 @@
 package com.kbase.katha.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -45,7 +40,6 @@ public class SaveFragment extends Fragment implements SearchView.OnQueryTextList
         getAllShortStories();
     }
 
-
     private void getAllShortStories() {
         SharedPreference sharedPreference = new SharedPreference();
         stories = new ArrayList<>();
@@ -53,11 +47,10 @@ public class SaveFragment extends Fragment implements SearchView.OnQueryTextList
         if (stories == null) {
             System.out.println("Null");
         } else {
-            storyAdapter = new StoryAdapter(stories, getContext(),"save");
+            storyAdapter = new StoryAdapter(stories, getContext(), "save");
             recyclerView.setAdapter(storyAdapter);
         }
     }
-
 
     @Override
     public boolean onQueryTextSubmit(String s) {

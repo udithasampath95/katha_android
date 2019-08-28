@@ -6,4 +6,5 @@
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="searchViewBack">#DAD5D5</color>
+    <color name="searchview_strock">#6984DD</color>
 </resources>

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -67,7 +66,7 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
     private void getAllShortStories() {
         i = 0;
         APIService getNoticeDataService = RetrofitInstance.getRetrofitInstance().create(APIService.class);
-        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(i,"short");
+        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(i, "short");
         call.enqueue(new Callback<ArrayList<Story>>() {
             @Override
             public void onResponse(Call<ArrayList<Story>> call, Response<ArrayList<Story>> response) {
@@ -122,7 +121,7 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
         list = new ArrayList<>();
         APIService getNoticeDataService = RetrofitInstance.getRetrofitInstance().create(APIService.class);
         int x = 5 * i;
-        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(x,"short");
+        Call<ArrayList<Story>> call = getNoticeDataService.getAllShortStories(x, "short");
         call.enqueue(new Callback<ArrayList<Story>>() {
             @Override
             public void onResponse(Call<ArrayList<Story>> call, Response<ArrayList<Story>> response) {

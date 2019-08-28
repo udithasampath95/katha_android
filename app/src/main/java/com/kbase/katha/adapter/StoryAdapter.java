@@ -26,7 +26,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     ArrayList<Story> arryList;
     StoryAdapterInterface storyAdapterInterface;
     Context context;
-    String s="";
+    String s = "";
 
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROG = 0;
@@ -52,7 +52,6 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.storyAdapterInterface = (StoryAdapterInterface) context;
         this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -83,6 +82,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((TextViewHolder) holder).storyUploadedDate.setText("");
                 ((TextViewHolder) holder).bind(nameArrayList.get(position), storyAdapterInterface);
 
+                System.out.println(story.getImagePath());
                 Glide.with(context)
                         .asBitmap()
                         .load(story.getImagePath())
@@ -91,17 +91,14 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else {
             ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
         }
-
-
     }
-
 
     @Override
     public int getItemCount() {
         return nameArrayList.size();
     }
 
-    public  class TextViewHolder extends RecyclerView.ViewHolder {
+    public class TextViewHolder extends RecyclerView.ViewHolder {
 
         View view;
         TextView title, content, storyUploadedDate;
@@ -120,9 +117,9 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(s.equalsIgnoreCase("save")){
-                        storyAdapterInterface.navigate(story,"save");
-                    }else {
+                    if (s.equalsIgnoreCase("save")) {
+                        storyAdapterInterface.navigate(story, "save");
+                    } else {
                         storyAdapterInterface.navigate(story, "");
                     }
                 }
