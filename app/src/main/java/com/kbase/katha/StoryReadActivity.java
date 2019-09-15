@@ -18,6 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,7 +28,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.kbase.katha.model.Story;
 import com.kbase.katha.sharedpreferences.SharedPreference;
-import com.koushikdutta.ion.Ion;
+import com.startapp.android.publish.adsCommon.StartAppAd;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 
 import java.io.File;
@@ -35,10 +37,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
-
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static java.security.AccessController.getContext;
 
 public class StoryReadActivity extends AppCompatActivity {
     Story story;
@@ -62,6 +60,7 @@ public class StoryReadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_read);
 
+        initAd();
         getExtras();
         initViews();
         setValues();
@@ -72,6 +71,11 @@ public class StoryReadActivity extends AppCompatActivity {
         } else {
             removeSave.setVisibility(View.GONE);
         }
+    }
+
+    private void initAd() {
+        StartAppSDK.init(this, "208604706", true);
+        StartAppAd.showAd(this);
     }
 
     public boolean checkSave(Story story) {
@@ -96,49 +100,52 @@ public class StoryReadActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreference sharedPreference = new SharedPreference();
-                List<Story> favorites = sharedPreference.getFavorites(StoryReadActivity.this);
-                Story stories = new Story();
-                stories.setStoryId(story.getStoryId());
-                stories.setStoryTitleSinhala(titleTextView.getText().toString());
-                stories.setStoryContent(contentTextView.getText().toString());
-                stories.setStoryUploadedBy(uploadedByTextView.getText().toString());
-                stories.setStoryUploadedDate(uploadedDateTextView.getText().toString());
-                stories.setImagePath(imagePath);
-                stories.setStoryTitleSinglish(singlishName);
-                sharedPreference.addFavorite(StoryReadActivity.this, stories);
-                Toast.makeText(StoryReadActivity.this, "Story saved", Toast.LENGTH_SHORT).show();
-                removeSave.setVisibility(View.VISIBLE);
-                saveButton.setVisibility(View.GONE);
+
+                    SharedPreference sharedPreference = new SharedPreference();
+                    List<Story> favorites = sharedPreference.getFavorites(StoryReadActivity.this);
+                    Story stories = new Story();
+                    stories.setStoryId(story.getStoryId());
+                    stories.setStoryTitleSinhala(titleTextView.getText().toString());
+                    stories.setStoryContent(contentTextView.getText().toString());
+                    stories.setStoryUploadedBy(uploadedByTextView.getText().toString());
+                    stories.setStoryUploadedDate(uploadedDateTextView.getText().toString());
+                    stories.setImagePath(imagePath);
+                    stories.setStoryTitleSinglish(singlishName);
+                    sharedPreference.addFavorite(StoryReadActivity.this, stories);
+                    Toast.makeText(StoryReadActivity.this, "Story saved", Toast.LENGTH_SHORT).show();
+                    removeSave.setVisibility(View.VISIBLE);
+                    saveButton.setVisibility(View.GONE);
+
             }
         });
 
         removeSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = story.getStoryId();
-                SharedPreference sharedPreference = new SharedPreference();
-                List<Story> favorites = sharedPreference.getFavorites(StoryReadActivity.this);
-                for (int i = 0; i < favorites.size(); i++) {
-                    if (favorites.get(i).getStoryId().equalsIgnoreCase(title)) {
 
-                        sharedPreference.removeFavorite(StoryReadActivity.this,
-                                favorites.get(i));
-                        removeSave.setVisibility(View.GONE);
-                        saveButton.setVisibility(View.VISIBLE);
-                        Toast.makeText(StoryReadActivity.this, "Story removed", Toast.LENGTH_SHORT).show();
+                    String title = story.getStoryId();
+                    SharedPreference sharedPreference = new SharedPreference();
+                    List<Story> favorites = sharedPreference.getFavorites(StoryReadActivity.this);
+                    for (int i = 0; i < favorites.size(); i++) {
+                        if (favorites.get(i).getStoryId().equalsIgnoreCase(title)) {
+
+                            sharedPreference.removeFavorite(StoryReadActivity.this,
+                                    favorites.get(i));
+                            removeSave.setVisibility(View.GONE);
+                            saveButton.setVisibility(View.VISIBLE);
+                            Toast.makeText(StoryReadActivity.this, "Story removed", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
             }
         });
 
         textShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    bitmap = getBitmapFromView(imageView);
-                    if (bitmap != null) {
-                        getLocationPermission();
-                    }
+                bitmap = getBitmapFromView(imageView);
+                if (bitmap != null) {
+                    getLocationPermission();
+                }
             }
         });
     }
@@ -226,7 +233,7 @@ public class StoryReadActivity extends AppCompatActivity {
         Uri U = FileProvider.getUriForFile(this, "com.kbase.katha.fileprovider", F);
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("image/png");
-        i.putExtra(Intent.EXTRA_COMPONENT_NAME,"aaaaa");
+        i.putExtra(Intent.EXTRA_COMPONENT_NAME, "aaaaa");
         i.putExtra(Intent.EXTRA_TEXT, titleTextView.getText().toString() + " \n " + contentTextView.getText().toString().substring(25) + " \n " + "" + "\n\n" + " https://play.google.com/store/apps/details?id=com.kbase.katha&hl=en");
         i.putExtra(Intent.EXTRA_STREAM, U);
         startActivityForResult(Intent.createChooser(i, "share via"), 1);

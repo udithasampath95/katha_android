@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".StoryReadActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="fill_parent"
@@ -33,23 +34,24 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:src="@drawable/ic_favoritr_n"
                 android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/textShare"
                 android:layout_marginLeft="-50dp"
                 android:layout_toLeftOf="@+id/text_share"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_favoritr_n" />
+
             <ImageButton
-                android:src="@drawable/ic_favoritr_y"
                 android:id="@+id/saveRemoveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/textShare"
                 android:layout_marginLeft="-50dp"
                 android:layout_toLeftOf="@+id/text_share"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_favoritr_y" />
 
             <TextView
                 android:id="@+id/textShare"
@@ -93,12 +95,12 @@
                     android:textStyle="bold|italic" />
 
                 <ImageView
-                    android:src="@drawable/dummy_loading"
                     android:id="@+id/image"
                     android:layout_width="250dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/dummy_loading">
 
                 </ImageView>
 
@@ -139,8 +141,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <com.startapp.android.publish.ads.banner.Banner
+                android:id="@+id/startAppBanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true" />
 
         </LinearLayout>
 

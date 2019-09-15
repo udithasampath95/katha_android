@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
 import com.kbase.katha.R;
 import com.kbase.katha.model.Story;
 import com.kbase.katha.utill.StoryAdapterInterface;
@@ -27,6 +28,7 @@ public class StoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     StoryAdapterInterface storyAdapterInterface;
     Context context;
     String s = "";
+
 
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROG = 0;

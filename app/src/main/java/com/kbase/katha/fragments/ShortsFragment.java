@@ -20,6 +20,7 @@ import com.kbase.katha.R;
 import com.kbase.katha.RetrofitInstance;
 import com.kbase.katha.adapter.StoryAdapter;
 import com.kbase.katha.model.Story;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_shorts, container, false);
+        initAds(root);
         onLoadMoreListener = this;
         recyclerView = root.findViewById(R.id.recyclingView);
         searchView = root.findViewById(R.id.searchView);
@@ -49,6 +51,7 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
+        StartAppSDK.init(getActivity(), "208604706", true);
         startProgress();
         getAllShortStories();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -61,6 +64,10 @@ public class ShortsFragment extends Fragment implements SearchView.OnQueryTextLi
                 }
             }
         });
+    }
+
+    private void initAds(View root) {
+
     }
 
     private void getAllShortStories() {

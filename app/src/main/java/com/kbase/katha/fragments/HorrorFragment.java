@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kbase.katha.APIService;
 import com.kbase.katha.R;
 import com.kbase.katha.RetrofitInstance;
+import com.kbase.katha.StoryReadActivity;
 import com.kbase.katha.adapter.StoryAdapter;
 import com.kbase.katha.model.Story;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +39,13 @@ public class HorrorFragment extends Fragment implements SearchView.OnQueryTextLi
     List<Story> list;
     ArrayList<Story> stories;
     private int i;
+//    private AdView mAdView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_novels, container, false);
+        View root = inflater.inflate(R.layout.fragment_horror, container, false);
         onLoadMoreListener = this;
+        initAds(root);
         recyclerView = root.findViewById(R.id.recyclingView);
         searchView = root.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(this);
@@ -50,6 +54,7 @@ public class HorrorFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
+        StartAppSDK.init(getActivity(), "208604706", true);
         startProgress();
         getAllShortStories();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -62,6 +67,13 @@ public class HorrorFragment extends Fragment implements SearchView.OnQueryTextLi
                 }
             }
         });
+    }
+
+    private void initAds(View root) {
+//        mAdView = root.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder()
+//                .build();
+//        mAdView.loadAd(adRequest);
     }
 
     private void getAllShortStories() {

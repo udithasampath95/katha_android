@@ -13,4 +13,10 @@
     <string name="menu_save">ගබඩා කිරීම්</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="appid">ca-app-pub-7963174492650286~1538718934</string>
+    <string name="shortAppId">ca-app-pub-7963174492650286/5936118158</string>
+    <string name="horroAppId">ca-app-pub-7963174492650286/7273250555</string>
+    <string name="testAdd">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="saveAppId">ca-app-pub-7963174492650286/7266329938</string>
+
 </resources>

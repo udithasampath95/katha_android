@@ -23,6 +23,7 @@ import com.kbase.katha.RetrofitInstance;
 import com.kbase.katha.adapter.StoryAdapter;
 
 import com.kbase.katha.model.Story;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import org.json.JSONObject;
 
@@ -45,6 +46,7 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
     JSONObject jsonObject = null;
     Story story;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_novels, container, false);
@@ -57,6 +59,7 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
+        StartAppSDK.init(getActivity(), "208604706", true);
         startProgress();
         getAllShortStories();
 //        getDataUsingVollyRequest();
@@ -71,51 +74,6 @@ public class NovelsFragment extends Fragment implements SearchView.OnQueryTextLi
             }
         });
     }
-
-//    private void getDataUsingVollyRequest() {
-//        i = 0;
-//        String url = AppConsts.BASEURLVOLLY + "offset=" + i + "&" + "story_type=" + "short";
-//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                dismissProgress();
-//                stories = new ArrayList<>();
-//                for (int i = 0; i < response.length(); i++) {
-//                    try {
-//                        Gson gson = new Gson();
-//                        jsonObject = response.getJSONObject(i);
-//                        story=gson.fromJson(jsonObject.toString(),Story.class);
-////                        story.setStoryId(jsonObject.getString("storyId"));
-////                        story.setStoryTitleSinhala(jsonObject.getString("storyTitleSinhala"));
-////                        story.setStoryTitleSinglish(jsonObject.getString("storyTitleSinglish"));
-////                        story.setStoryContent(jsonObject.getString("storyContent"));
-////                        story.setStoryUploadedDate(jsonObject.getString("storyUploadedDate"));
-////                        story.setStoryUploadedBy(jsonObject.getString("storyUploadedBy"));
-////                        story.setImagePath(jsonObject.getString("imagePath"));
-//                        stories.add(story);
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                storyAdapter = new StoryAdapter(stories, getContext(), onLoadMoreListener);
-//                recyclerView.setAdapter(storyAdapter);
-//
-//
-//            }
-//        }, new com.android.volley.Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                dismissProgress();
-//                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                60000,
-//                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        VollySingleton.getInstance(getContext()).addToRequestQueue(jsonArrayRequest);
-//    }
 
     private void getAllShortStories() {
         i = 0;

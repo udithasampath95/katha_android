@@ -16,6 +16,7 @@ import com.kbase.katha.R;
 import com.kbase.katha.adapter.StoryAdapter;
 import com.kbase.katha.model.Story;
 import com.kbase.katha.sharedpreferences.SharedPreference;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,9 @@ public class SaveFragment extends Fragment implements SearchView.OnQueryTextList
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        StartAppSDK.init(getActivity(), "208604706", true);
         View root = inflater.inflate(R.layout.fragment_save, container, false);
+        initAds(root);
         recyclerView = root.findViewById(R.id.recyclingView);
         searchView = root.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(this);
@@ -37,7 +40,13 @@ public class SaveFragment extends Fragment implements SearchView.OnQueryTextList
 
     @Override
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
+
+
         getAllShortStories();
+    }
+
+    private void initAds(View root) {
+
     }
 
     private void getAllShortStories() {
